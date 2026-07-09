@@ -56,6 +56,13 @@
   @keyframes pl{0%,100%{opacity:1}50%{opacity:.25}}
   /* long email must fit the viewport */
   .big-mail{font-size:clamp(1.5rem,5.4vw,4.4rem);word-break:break-word;max-width:100%}
+  /* games section branding */
+  .work.games{padding-top:clamp(60px,9vh,120px)}
+  .games-brand{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;
+    padding-top:clamp(40px,6vh,72px);border-top:1px solid var(--line);margin-bottom:clamp(30px,5vw,60px)}
+  .games-brand .gmark{color:var(--accent);font-size:1rem;transform:translateY(-1px)}
+  .games-brand .gname{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.3rem);letter-spacing:.03em}
+  .games-brand .gtag{font-size:.82rem;color:var(--ink-1);letter-spacing:.02em;max-width:42ch}
 </style>
 </head>
 <body>
@@ -106,8 +113,8 @@
   <!-- MARQUEE -->
   <section class="marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span>PARFECT</span><i>✦</i><span>ABONO</span><i>✦</i><span>NORTHPOINT</span><i>✦</i><span>PLINTH</span><i>✦</i><span>CAIRN</span><i>✦</i><span>HEARTS</span><i>✦</i><span>MONSTER KEBABS</span><i>✦</i>
-      <span>PARFECT</span><i>✦</i><span>ABONO</span><i>✦</i><span>NORTHPOINT</span><i>✦</i><span>PLINTH</span><i>✦</i><span>CAIRN</span><i>✦</i><span>HEARTS</span><i>✦</i><span>MONSTER KEBABS</span><i>✦</i>
+      <span>PARFECT</span><i>✦</i><span>ABONO</span><i>✦</i><span>NORTHPOINT</span><i>✦</i><span>PLINTH</span><i>✦</i><span>CAIRN</span><i>✦</i><span>MONSTER KEBABS</span><i>✦</i><span>UMBRAL</span><i>✦</i><span>PANGEA</span><i>✦</i><span>HEARTS</span><i>✦</i>
+      <span>PARFECT</span><i>✦</i><span>ABONO</span><i>✦</i><span>NORTHPOINT</span><i>✦</i><span>PLINTH</span><i>✦</i><span>CAIRN</span><i>✦</i><span>MONSTER KEBABS</span><i>✦</i><span>UMBRAL</span><i>✦</i><span>PANGEA</span><i>✦</i><span>HEARTS</span><i>✦</i>
     </div>
   </section>
 
@@ -116,9 +123,25 @@
     <div class="wrap">
       <div class="sec-head rv">
         <h2>Selected<br>work.</h2>
-        <span class="idx">7 projects · live</span>
+        <span class="idx">6 · apps &amp; brands</span>
       </div>
       <div class="cases" id="cases"></div>
+    </div>
+  </section>
+
+  <!-- GAMES -->
+  <section class="work games" id="games">
+    <div class="wrap">
+      <div class="games-brand rv">
+        <span class="gmark">◆</span>
+        <span class="gname">AM&nbsp;GAMES</span>
+        <span class="gtag">Original playable worlds — built from scratch, running in the browser.</span>
+      </div>
+      <div class="sec-head rv">
+        <h2>Playable<br>worlds.</h2>
+        <span class="idx">3 games · live</span>
+      </div>
+      <div class="cases" id="games-cases"></div>
     </div>
   </section>
 
@@ -158,8 +181,8 @@
 </footer>
 
 <script>
-/* ---- project data ---- */
-const P = [
+/* ---- apps & brands ---- */
+const APPS = [
   {name:"PARFECT",cat:"App · Golf analytics",url:"https://parfectapp.github.io/parfect/",host:"parfect.app",
    desc:"Every shot, every green, every pattern. Golf analytics that turns your rounds into decisions — not nostalgia."},
   {name:"ABONO",cat:"App · AgTech",url:"https://parfectapp.github.io/agrofin/",host:"abono.mx",
@@ -170,40 +193,52 @@ const P = [
    desc:"Sculptural sound objects in numbered editions. Bone, ink and amber — pieces you claim, not just buy."},
   {name:"CAIRN",cat:"Brand · Mountain apparel",url:"cairn/index.html",host:"cairn.wear",
    desc:"Technical mountain apparel in counted editions. Faceless silhouettes, noble materials, your own number."},
-  {name:"HEARTS",cat:"Game · Battle royale",url:"https://parfectapp.github.io/hearts/landing.html",host:"hearts.gg",
-   desc:"An animal battle royale — predators vs. prey — with a marketplace, a wallet and a three-phase ranked ladder."},
   {name:"MONSTER KEBABS",cat:"Brand · Dark kitchen",url:"https://parfectapp.github.io/monster-kebabs/fotos.html",host:"monsterkebabs.mx",img:"https://parfectapp.github.io/monster-kebabs/fotos/kebo-clasico.jpg",
    desc:"A premium kebab dark kitchen in Morelia. Kaiju universe, KEBO the mascot, collectible stickers. Feed the monster."},
 ];
 
-const cases = document.getElementById('cases');
-P.forEach((p,i)=>{
-  const art=document.createElement('article');
-  art.className="case rv";
-  art.innerHTML=`
-    <div class="case-info">
-      <div class="c-idx">${String(i+1).padStart(2,'0')} / 07 · Live</div>
-      <h3>${p.name.replace(/ /,'<br>')}</h3>
-      <div class="c-cat">${p.cat}</div>
-      <p class="c-desc">${p.desc}</p>
-      <a class="c-enter" href="${p.url}" target="_blank" rel="noopener" data-hover><b>Open project</b> ↗</a>
-    </div>
-    <a class="case-media" href="${p.url}" target="_blank" rel="noopener" data-hover aria-label="Abrir ${p.name}">
-      <div class="chrome">
-        <i></i><i></i><i></i>
-        <span class="url">${p.host}</span>
-        <span class="live"><b></b>En vivo</span>
+/* ---- games (AM GAMES) — bottom of the portfolio ---- */
+const GAMES = [
+  {name:"UMBRAL",cat:"Game · Metroidvania",url:"umbral/index.html",host:"umbral.game",
+   desc:"An original Hollow-Knight-style metroidvania — a sunken kingdom under the mist. Hand-built combat, a connected map and three bosses, with an original score."},
+  {name:"PANGEA",cat:"Game · God simulator",url:"pangea/index.html",host:"pangea.world",
+   desc:"A god game in the spirit of Stardew — guide a tribe from the Stone Age to interplanetary. Faith, miracles, seasons and fire, all procedurally drawn."},
+  {name:"HEARTS",cat:"Game · Battle royale",url:"https://parfectapp.github.io/hearts/landing.html",host:"hearts.gg",
+   desc:"An animal battle royale — predators vs. prey — with a marketplace, a wallet and a three-phase ranked ladder."},
+];
+
+function renderInto(list, elId){
+  const box=document.getElementById(elId);
+  list.forEach((p,i)=>{
+    const art=document.createElement('article');
+    art.className="case rv";
+    art.innerHTML=`
+      <div class="case-info">
+        <div class="c-idx">${String(i+1).padStart(2,'0')} / ${String(list.length).padStart(2,'0')} · Live</div>
+        <h3>${p.name.replace(/ /,'<br>')}</h3>
+        <div class="c-cat">${p.cat}</div>
+        <p class="c-desc">${p.desc}</p>
+        <a class="c-enter" href="${p.url}" target="_blank" rel="noopener" data-hover><b>Open project</b> ↗</a>
       </div>
-      <div class="stage">
-        <div class="load">Cargando ${p.name}…</div>
-        ${p.img
-          ? `<img class="shot-img" src="${p.img}" alt="${p.name}" loading="lazy">`
-          : `<iframe data-src="${p.url}" scrolling="no" title="${p.name}" tabindex="-1"></iframe>`}
-        <div class="veil"></div>
-      </div>
-    </a>`;
-  cases.appendChild(art);
-});
+      <a class="case-media" href="${p.url}" target="_blank" rel="noopener" data-hover aria-label="Open ${p.name}">
+        <div class="chrome">
+          <i></i><i></i><i></i>
+          <span class="url">${p.host}</span>
+          <span class="live"><b></b>En vivo</span>
+        </div>
+        <div class="stage">
+          <div class="load">Cargando ${p.name}…</div>
+          ${p.img
+            ? `<img class="shot-img" src="${p.img}" alt="${p.name}" loading="lazy">`
+            : `<iframe data-src="${p.url}" scrolling="no" title="${p.name}" tabindex="-1"></iframe>`}
+          <div class="veil"></div>
+        </div>
+      </a>`;
+    box.appendChild(art);
+  });
+}
+renderInto(APPS,'cases');
+renderInto(GAMES,'games-cases');
 
 /* lazy-load + fade the live previews */
 const io=new IntersectionObserver((es)=>{

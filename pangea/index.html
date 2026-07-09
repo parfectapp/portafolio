@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PANGEA — simulador de dios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="game"></canvas>
+
+<div id="hud">
+  <header id="topbar">
+    <div id="brand">PANGEA<span>simulador de dios</span></div>
+    <div id="clock">Año 1 · Primavera · Día 1</div>
+    <div id="res"></div>
+    <div id="controls">
+      <button id="btn-pause" title="Pausa (espacio)">II</button>
+      <button id="btn-1x" class="sel">1×</button>
+      <button id="btn-3x">3×</button>
+      <button id="btn-audio">SONIDO</button>
+    </div>
+  </header>
+
+  <div id="erabox">
+    <label id="eralabel">EDAD DE PIEDRA</label>
+    <div id="erabar"><i id="erafill"></i></div>
+    <label id="eranext">→ Edad Agrícola</label>
+  </div>
+
+  <div id="feed"></div>
+
+  <div id="minimapbox"><canvas id="minimap" width="144" height="144"></canvas></div>
+
+  <div id="inspector"></div>
+
+  <div id="colony">COLONIA NOVA ACTIVA</div>
+
+  <footer id="dock">
+    <div id="faithbox">
+      <label>FE</label>
+      <div id="faithbar"><i id="faithfill"></i></div>
+      <b id="faithnum">90</b>
+    </div>
+    <div id="powers"></div>
+    <div id="powerhint"></div>
+  </footer>
+</div>
+
+<div id="intro" class="overlay">
+  <div class="panel">
+    <h1>PANGEA</h1>
+    <p class="sub">simulador de dios</p>
+    <p class="lead">Una tribu diminuta despierta en un mundo virgen.
+    Ellos cazan, siembran, construyen y aprenden solos —
+    tú decides si los bendices o los castigas.
+    De la <em>Edad de Piedra</em> a las <em>estrellas</em>.</p>
+    <div class="btns">
+      <button id="btn-new" class="big">NUEVO MUNDO</button>
+      <button id="btn-load" class="big ghost">CONTINUAR</button>
+    </div>
+    <p class="hint">arrastra para moverte · rueda para acercar · 1–8 poderes · espacio pausa</p>
+  </div>
+</div>
+
+<div id="victory" class="overlay">
+  <div class="panel">
+    <p class="sub">tu civilización alcanzó las estrellas</p>
+    <h1>INTERPLANETARIA</h1>
+    <div id="vstats"></div>
+    <div class="btns">
+      <button id="btn-continue" class="big">SEGUIR REINANDO</button>
+    </div>
+  </div>
+</div>
+
+<div id="extinct" class="overlay">
+  <div class="panel">
+    <h1>SILENCIO</h1>
+    <p class="lead">El último de tu pueblo ha muerto. El mundo sigue girando, pero ya nadie reza tu nombre.</p>
+    <div class="btns">
+      <button id="btn-restart" class="big">CREAR OTRO MUNDO</button>
+    </div>
+  </div>
+</div>
+
+<script defer src="js/core.js"></script>
+<script defer src="js/sprites.js"></script>
+<script defer src="js/world.js"></script>
+<script defer src="js/sim.js"></script>
+<script defer src="js/powers.js"></script>
+<script defer src="js/render.js"></script>
+<script defer src="js/audio.js"></script>
+<script defer src="js/ui.js"></script>
+<script defer src="js/main.js"></script>
+</body>
+</html>

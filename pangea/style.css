@@ -1,0 +1,205 @@
+/* PANGEA — interfaz editorial sobre mundo pixel */
+:root {
+  --ink: #101410;
+  --panel: rgba(14, 17, 13, 0.88);
+  --line: #2c3128;
+  --bone: #ecd9ac;
+  --text: #d8d4c4;
+  --dim: #8b8b7f;
+  --amber: #e8a33d;
+  --warn: #b23a2e;
+  --sky: #9fd0d8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; overflow: hidden; background: var(--ink); }
+body { font-family: 'IBM Plex Mono', monospace; color: var(--text); }
+
+#game {
+  position: fixed; inset: 0;
+  image-rendering: pixelated;
+  cursor: crosshair;
+}
+
+#hud { position: fixed; inset: 0; pointer-events: none; }
+#hud button { pointer-events: auto; }
+#hud canvas { pointer-events: auto; }
+
+/* ---------- barra superior ---------- */
+#topbar {
+  position: absolute; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; gap: 24px;
+  padding: 10px 16px;
+  background: linear-gradient(to bottom, rgba(10,12,9,0.92), rgba(10,12,9,0.0));
+}
+#brand {
+  font-size: 15px; font-weight: 600; letter-spacing: 0.22em; color: var(--bone);
+}
+#brand span {
+  display: block; font-size: 8.5px; font-weight: 400; letter-spacing: 0.3em;
+  color: var(--dim); margin-top: 1px;
+}
+#clock { font-size: 10.5px; letter-spacing: 0.08em; color: var(--dim); }
+#res { display: flex; gap: 18px; font-size: 10.5px; letter-spacing: 0.06em; margin-left: auto; }
+#res span { white-space: nowrap; }
+#controls { display: flex; gap: 6px; }
+#controls button, .power {
+  font-family: inherit; font-size: 10px; letter-spacing: 0.08em;
+  background: var(--panel); color: var(--text);
+  border: 1px solid var(--line); border-radius: 3px;
+  padding: 5px 10px; cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+#controls button:hover { border-color: var(--amber); }
+#controls button.sel { border-color: var(--amber); color: var(--amber); }
+
+/* ---------- era ---------- */
+#erabox {
+  position: absolute; top: 58px; left: 16px;
+  display: flex; align-items: center; gap: 10px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 3px;
+  padding: 7px 12px;
+}
+#erabox.flash { animation: flash 1.6s ease; }
+@keyframes flash {
+  0%, 100% { border-color: var(--line); }
+  20% { border-color: var(--amber); box-shadow: 0 0 24px rgba(232,163,61,0.35); }
+}
+#erabox label { font-size: 10px; letter-spacing: 0.18em; color: var(--bone); }
+#erabox #eranext { color: var(--dim); letter-spacing: 0.04em; font-size: 9.5px; }
+#erabar {
+  width: 130px; height: 5px; background: #1c201a; border-radius: 2px; overflow: hidden;
+}
+#erafill { display: block; height: 100%; width: 0%; background: var(--amber); transition: width 0.4s; }
+
+/* ---------- feed ---------- */
+#feed {
+  position: absolute; top: 58px; right: 16px;
+  display: flex; flex-direction: column; gap: 5px; align-items: flex-end;
+  max-width: 320px;
+}
+.note {
+  background: var(--panel); border: 1px solid var(--line); border-left: 2px solid var(--dim);
+  border-radius: 2px; padding: 5px 10px;
+  font-size: 10px; letter-spacing: 0.04em;
+  animation: slidein 0.25s ease;
+  transition: opacity 0.9s;
+}
+.note.era { border-left-color: var(--amber); color: var(--bone); }
+.note.warn { border-left-color: var(--warn); }
+.note.hint { border-left-color: var(--sky); color: var(--sky); }
+.note.fade { opacity: 0; }
+@keyframes slidein { from { transform: translateX(12px); opacity: 0; } }
+
+/* ---------- minimapa ---------- */
+#minimapbox {
+  position: absolute; left: 16px; bottom: 96px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 3px;
+  padding: 5px;
+}
+#minimap { display: block; width: 144px; height: 144px; image-rendering: pixelated; cursor: pointer; }
+
+/* ---------- inspector ---------- */
+#inspector {
+  position: absolute; left: 16px; bottom: 268px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 3px;
+  padding: 8px 12px; font-size: 10.5px;
+  display: none; flex-direction: column; gap: 2px;
+}
+#inspector.show { display: flex; }
+#inspector b { color: var(--bone); letter-spacing: 0.06em; }
+#inspector span { color: var(--dim); font-size: 9.5px; }
+
+/* ---------- colonia ---------- */
+#colony {
+  position: absolute; top: 100px; left: 16px;
+  display: none;
+  background: var(--panel); border: 1px solid var(--sky); border-radius: 3px;
+  color: var(--sky); font-size: 9px; letter-spacing: 0.2em; padding: 6px 10px;
+}
+#colony.show { display: block; }
+
+/* ---------- dock de poderes ---------- */
+#dock {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  padding: 14px 16px 16px;
+  background: linear-gradient(to top, rgba(10,12,9,0.94), rgba(10,12,9,0.0));
+}
+#faithbox { display: flex; align-items: center; gap: 8px; }
+#faithbox label { font-size: 9px; letter-spacing: 0.2em; color: var(--dim); }
+#faithbar { width: 90px; height: 5px; background: #1c201a; border-radius: 2px; overflow: hidden; }
+#faithfill { display: block; height: 100%; background: var(--bone); transition: width 0.3s; }
+#faithbox b { font-size: 11px; color: var(--bone); min-width: 28px; }
+#powers { display: flex; gap: 6px; }
+.power {
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+  min-width: 86px; padding: 6px 8px 5px;
+  position: relative;
+}
+.power:hover { border-color: var(--amber); }
+.power.sel { border-color: var(--amber); color: var(--amber); box-shadow: 0 0 18px rgba(232,163,61,0.25); }
+.power.poor { opacity: 0.4; }
+.pkey {
+  position: absolute; top: 3px; left: 5px;
+  font-size: 8px; color: var(--dim);
+}
+.pname { font-size: 10px; letter-spacing: 0.06em; }
+.pcost { font-size: 8.5px; color: var(--dim); }
+#powerhint {
+  position: absolute; bottom: 74px; left: 50%; transform: translateX(-50%);
+  background: var(--panel); border: 1px solid var(--line); border-radius: 3px;
+  font-size: 9.5px; color: var(--dim); padding: 5px 12px;
+  display: none; white-space: nowrap;
+}
+#powerhint.show { display: block; }
+
+/* ---------- overlays ---------- */
+.overlay {
+  position: fixed; inset: 0; z-index: 20;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(8, 10, 7, 0.88);
+  backdrop-filter: blur(3px);
+}
+.overlay.show { display: flex; }
+.panel { text-align: center; max-width: 520px; padding: 32px; }
+.panel h1 {
+  font-family: 'Instrument Serif', serif; font-weight: 400;
+  font-size: 72px; letter-spacing: 0.08em; color: var(--bone);
+  line-height: 1;
+}
+.panel .sub {
+  font-size: 10px; letter-spacing: 0.42em; color: var(--amber);
+  text-transform: uppercase; margin: 10px 0 26px;
+}
+.panel .lead {
+  font-size: 12.5px; line-height: 1.75; color: var(--text); margin-bottom: 30px;
+}
+.panel .lead em { color: var(--bone); font-style: normal; }
+.btns { display: flex; gap: 10px; justify-content: center; margin-bottom: 22px; }
+button.big {
+  font-family: inherit; font-size: 11px; letter-spacing: 0.18em;
+  background: var(--bone); color: #14120c; border: 1px solid var(--bone);
+  border-radius: 3px; padding: 13px 26px; cursor: pointer;
+  transition: background 0.15s;
+}
+button.big:hover { background: var(--amber); border-color: var(--amber); }
+button.big.ghost { background: transparent; color: var(--bone); }
+button.big.ghost:hover { color: var(--amber); border-color: var(--amber); background: transparent; }
+.panel .hint { font-size: 9px; letter-spacing: 0.1em; color: var(--dim); }
+#vstats {
+  display: flex; gap: 26px; justify-content: center; margin: 4px 0 30px;
+}
+#vstats div { display: flex; flex-direction: column; }
+#vstats b {
+  font-family: 'Instrument Serif', serif; font-weight: 400;
+  font-size: 30px; color: var(--bone);
+}
+#vstats span { font-size: 8.5px; letter-spacing: 0.16em; color: var(--dim); text-transform: uppercase; }
+
+@media (max-width: 900px) {
+  #res { display: none; }
+  .power { min-width: 64px; }
+  .panel h1 { font-size: 48px; }
+}

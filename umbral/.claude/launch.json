@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "umbral",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4270", "--directory", "/Users/andremacouzet/claude/umbral"],
+      "port": 4270
+    }
+  ]
+}

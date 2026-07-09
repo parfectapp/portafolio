@@ -36,9 +36,9 @@
   .case-media{position:relative;display:block;border-radius:16px;overflow:hidden;
     border:1px solid var(--line);background:var(--bg-1);box-shadow:0 50px 100px -50px rgba(0,0,0,.95)}
   .stage{position:relative;aspect-ratio:16/10.2;overflow:hidden;background:#07070D}
-  .stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  .stage video,.stage .shot-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
     border:0;background:#07070D;opacity:0;transition:opacity 1s var(--ease)}
-  .stage video.ready{opacity:1}
+  .stage video.ready,.stage .shot-img.ready{opacity:1}
   .stage iframe{position:absolute;top:0;left:0;width:143%;height:143%;
     transform:scale(.7);transform-origin:top left;border:0;pointer-events:none;
     opacity:0;transition:opacity 1s var(--ease)}
@@ -172,7 +172,7 @@ const P = [
    desc:"Technical mountain apparel in counted editions. Faceless silhouettes, noble materials, your own number."},
   {name:"HEARTS",cat:"Game · Battle royale",url:"https://parfectapp.github.io/hearts/landing.html",host:"hearts.gg",
    desc:"An animal battle royale — predators vs. prey — with a marketplace, a wallet and a three-phase ranked ladder."},
-  {name:"MONSTER KEBABS",cat:"Brand · Dark kitchen",url:"https://parfectapp.github.io/monster-kebabs/fotos.html",host:"monsterkebabs.mx",peek:300,
+  {name:"MONSTER KEBABS",cat:"Brand · Dark kitchen",url:"https://parfectapp.github.io/monster-kebabs/fotos.html",host:"monsterkebabs.mx",img:"https://parfectapp.github.io/monster-kebabs/fotos/kebo-clasico.jpg",
    desc:"A premium kebab dark kitchen in Morelia. Kaiju universe, KEBO the mascot, collectible stickers. Feed the monster."},
 ];
 
@@ -196,7 +196,9 @@ P.forEach((p,i)=>{
       </div>
       <div class="stage">
         <div class="load">Cargando ${p.name}…</div>
-        <iframe data-src="${p.url}" ${p.peek?`style="height:320%;transform:translateY(-${p.peek}px) scale(.7)"`:''} scrolling="no" title="${p.name}" tabindex="-1"></iframe>
+        ${p.img
+          ? `<img class="shot-img" src="${p.img}" alt="${p.name}" loading="lazy">`
+          : `<iframe data-src="${p.url}" scrolling="no" title="${p.name}" tabindex="-1"></iframe>`}
         <div class="veil"></div>
       </div>
     </a>`;
@@ -207,12 +209,19 @@ P.forEach((p,i)=>{
 const io=new IntersectionObserver((es)=>{
   es.forEach(e=>{
     if(!e.isIntersecting)return;
-    const f=e.target.querySelector('iframe');
     const load=e.target.querySelector('.load');
-    f.src=f.dataset.src;
-    const reveal=()=>{f.classList.add('ready');load&&load.classList.add('hide')};
-    f.addEventListener('load',reveal);
-    setTimeout(reveal,4500);
+    const f=e.target.querySelector('iframe');
+    const img=e.target.querySelector('.shot-img');
+    if(img){
+      const done=()=>{img.classList.add('ready');load&&load.classList.add('hide')};
+      img.complete?done():img.addEventListener('load',done);
+      setTimeout(done,3000);
+    } else if(f){
+      f.src=f.dataset.src;
+      const reveal=()=>{f.classList.add('ready');load&&load.classList.add('hide')};
+      f.addEventListener('load',reveal);
+      setTimeout(reveal,4500);
+    }
     io.unobserve(e.target);
   });
 },{rootMargin:"600px 0px"});

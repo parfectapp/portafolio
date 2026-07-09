@@ -34,13 +34,25 @@
   .case-info .c-enter b{color:var(--accent);font-weight:400}
 
   .case-media{position:relative;display:block;border-radius:16px;overflow:hidden;
-    border:1px solid var(--line);background:var(--bg-1);box-shadow:0 50px 100px -50px rgba(0,0,0,.95)}
+    border:1px solid var(--line);background:var(--bg-1);box-shadow:0 50px 100px -50px rgba(0,0,0,.95);
+    filter:saturate(.8) brightness(.72);
+    transition:transform .7s var(--ease),box-shadow .7s var(--ease),filter .7s ease}
+  .case:hover .case-media,.case-media:hover{
+    transform:translateY(-10px) scale(1.02);filter:none;
+    box-shadow:0 80px 150px -40px rgba(0,0,0,.98),0 0 0 1px rgba(237,231,218,.14)}
   .stage{position:relative;aspect-ratio:16/10.2;overflow:hidden;background:#07070D}
   .stage iframe{position:absolute;top:0;left:0;width:143%;height:143%;
     transform:scale(.7);transform-origin:top left;border:0;pointer-events:none;
     opacity:0;transition:opacity 1s var(--ease)}
   .stage iframe.ready{opacity:1}
-  .case-media:hover .stage iframe.ready{transform:scale(.735);transition:transform 1.8s var(--ease),opacity 1s}
+  .case-media:hover .stage iframe.ready{transform:scale(.745);transition:transform 2.6s var(--ease),opacity 1s}
+  /* "hover to preview" hint that fades out on hover */
+  .stage .hint{position:absolute;left:0;right:0;bottom:0;z-index:3;pointer-events:none;
+    padding:26px 16px 14px;text-align:center;
+    font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);
+    background:linear-gradient(0deg,rgba(7,7,10,.85),transparent);
+    transition:opacity .5s ease}
+  .case:hover .stage .hint{opacity:0}
   .stage .load{position:absolute;inset:0;display:grid;place-items:center;z-index:2;
     font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-2);
     background:linear-gradient(100deg,#0c0c0f 30%,rgba(244,241,234,.05) 50%,#0c0c0f 70%);
@@ -48,7 +60,8 @@
   .stage .load.hide{opacity:0;pointer-events:none}
   @keyframes sh{to{background-position:-200% 0}}
   .stage .veil{position:absolute;inset:0;z-index:1;pointer-events:none;
-    box-shadow:inset 0 0 70px 6px rgba(7,7,10,.55)}
+    box-shadow:inset 0 0 70px 6px rgba(7,7,10,.55);transition:opacity .6s ease}
+  .case:hover .stage .veil{opacity:0}
   .chrome .live{margin-left:auto;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
   .chrome .live b{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--accent);margin-right:6px;animation:pl 2s infinite}
   @keyframes pl{0%,100%{opacity:1}50%{opacity:.25}}
@@ -196,6 +209,7 @@ P.forEach((p,i)=>{
         <div class="load">Cargando ${p.name}…</div>
         <iframe data-src="${p.url}" scrolling="no" title="${p.name}" tabindex="-1"></iframe>
         <div class="veil"></div>
+        <div class="hint">Hover to preview · click to open ↗</div>
       </div>
     </a>`;
   cases.appendChild(art);

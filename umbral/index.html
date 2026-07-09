@@ -38,5 +38,23 @@
 <script src="js/data.js"></script>
 <script src="js/entities.js"></script>
 <script src="js/game.js"></script>
+<script>
+/* portfolio preview: boot straight into a gameplay scene when ?play is present */
+(function(){
+  if (location.search.indexOf('play') === -1) return;
+  var tries = 0;
+  var t = setInterval(function(){
+    tries++;
+    try {
+      if (typeof newGame === 'function' && window.G) {
+        newGame();
+        if (window.G) window.G.state = 'play';
+        clearInterval(t);
+      }
+    } catch(e){}
+    if (tries > 40) clearInterval(t);
+  }, 120);
+})();
+</script>
 </body>
 </html>

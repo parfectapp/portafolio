@@ -122,10 +122,32 @@
   <section class="work" id="work">
     <div class="wrap">
       <div class="sec-head rv">
-        <h2>Selected<br>work.</h2>
-        <span class="idx">6 · apps &amp; brands</span>
+        <h2>Apps &amp;<br>platforms.</h2>
+        <span class="idx">3 · live</span>
       </div>
       <div class="cases" id="cases"></div>
+    </div>
+  </section>
+
+  <!-- E-COMMERCE -->
+  <section class="work" id="ecommerce">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <h2>E-commerce.</h2>
+        <span class="idx">Stores · live</span>
+      </div>
+      <div class="cases" id="ecom-cases"></div>
+    </div>
+  </section>
+
+  <!-- BRANDING -->
+  <section class="work" id="branding">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <h2>Branding.</h2>
+        <span class="idx">Identity · live</span>
+      </div>
+      <div class="cases" id="brand-cases"></div>
     </div>
   </section>
 
@@ -181,7 +203,7 @@
 </footer>
 
 <script>
-/* ---- apps & brands ---- */
+/* ---- apps & platforms ---- */
 const APPS = [
   {name:"PARFECT",cat:"App · Golf analytics",url:"https://parfectapp.github.io/parfect/",host:"parfect.app",
    desc:"Every shot, every green, every pattern. Golf analytics that turns your rounds into decisions — not nostalgia."},
@@ -189,12 +211,20 @@ const APPS = [
    desc:"Total control of a greenhouse — costs, irrigation, yield and sales. And the only question that matters: did you make money?"},
   {name:"NORTHPOINT",cat:"Platform · Trading",url:"northpoint/index.html",host:"northpoint.trade",
    desc:"A trading academy and journal in one: logbook, calendar, money-management and an AI coach that reads your trades."},
-  {name:"PLINTH",cat:"Retail · Edition objects",url:"https://parfectapp.github.io/plinth/plinth.html",host:"plinth.studio",
-   desc:"Sculptural sound objects in numbered editions. Bone, ink and amber — pieces you claim, not just buy."},
-  {name:"CAIRN",cat:"Brand · Mountain apparel",url:"cairn/index.html",host:"cairn.wear",
-   desc:"Technical mountain apparel in counted editions. Faceless silhouettes, noble materials, your own number."},
-  {name:"MONSTER KEBABS",cat:"Brand · Dark kitchen",url:"https://parfectapp.github.io/monster-kebabs/fotos.html",host:"monsterkebabs.mx",img:"https://parfectapp.github.io/monster-kebabs/fotos/kebo-clasico.jpg",
-   desc:"A premium kebab dark kitchen in Morelia. Kaiju universe, KEBO the mascot, collectible stickers. Feed the monster."},
+];
+
+/* ---- e-commerce (stores) ---- */
+const ECOM = [
+  {name:"PLINTH",cat:"E-commerce · Edition objects",url:"https://parfectapp.github.io/plinth/plinth.html",host:"plinth.studio",
+   desc:"A store for sculptural sound objects in numbered editions. Bone, ink and amber — cart and checkout, pieces you claim, not just buy."},
+  {name:"CAIRN",cat:"E-commerce · Mountain apparel",url:"cairn/index.html",host:"cairn.wear",
+   desc:"An apparel store in counted editions — faceless silhouettes, noble materials, live cart and WhatsApp checkout."},
+];
+
+/* ---- branding ---- */
+const BRAND = [
+  {name:"MONSTER KEBABS",cat:"Branding · Dark kitchen",url:"https://parfectapp.github.io/monster-kebabs/fotos.html",host:"monsterkebabs.mx",img:"https://parfectapp.github.io/monster-kebabs/fotos/kebo-clasico.jpg",
+   desc:"Full brand identity for a premium kebab dark kitchen in Morelia — a kaiju universe, KEBO the mascot, packaging, photography and collectible stickers. Feed the monster."},
 ];
 
 /* ---- games (AM GAMES) — bottom of the portfolio ---- */
@@ -236,6 +266,8 @@ function renderInto(list, elId){
   });
 }
 renderInto(APPS,'cases');
+renderInto(ECOM,'ecom-cases');
+renderInto(BRAND,'brand-cases');
 renderInto(GAMES,'games-cases');
 
 /* lazy-load + fade the live previews */

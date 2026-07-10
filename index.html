@@ -144,17 +144,6 @@
     </div>
   </section>
 
-  <!-- MUSIC -->
-  <section class="work" id="music">
-    <div class="wrap">
-      <div class="sec-head rv">
-        <h2>Music.</h2>
-        <span class="idx">Artist · live</span>
-      </div>
-      <div class="cases" id="music-cases"></div>
-    </div>
-  </section>
-
   <!-- BRANDING -->
   <section class="work" id="branding">
     <div class="wrap">
@@ -235,6 +224,8 @@ const ECOM = [
    desc:"A store for sculptural sound objects in numbered editions. Bone, ink and amber — cart and checkout, pieces you claim, not just buy."},
   {name:"CAIRN",cat:"E-commerce · Mountain apparel",url:"cairn/index.html",host:"cairn.wear",
    desc:"An apparel store in counted editions — faceless silhouettes, noble materials, live cart and WhatsApp checkout."},
+  {name:"AMR",cat:"E-commerce · Records",url:"https://parfectapp.github.io/amr/",host:"amr.studio",
+   desc:"MONUMENTS — five original records, cut like monuments. A synth-driven artist project sold as numbered masters, on a site you play like a record."},
 ];
 
 /* ---- branding ---- */
@@ -242,12 +233,6 @@ const BRAND = [
   {name:"MONSTER KEBABS",cat:"Branding · Dark kitchen",url:"https://parfectapp.github.io/monster-kebabs/",host:"monsterkebabs.mx",
    img:"https://parfectapp.github.io/monster-kebabs/fotos/la-bestia.jpg",
    desc:"Full brand identity for a premium kebab dark kitchen in Morelia — a kaiju universe, KEBO the mascot, packaging, photography and collectible stickers. Feed the monster."},
-];
-
-/* ---- music (AMR) ---- */
-const MUSIC = [
-  {name:"AMR",cat:"Music · Artist",url:"https://parfectapp.github.io/amr/",host:"amr.studio",
-   desc:"MONUMENTS — five original records, cut like monuments. A synth-driven artist project with numbered masters and a site you play like a record."},
 ];
 
 /* ---- games (AM GAMES) — bottom of the portfolio ---- */
@@ -292,7 +277,6 @@ function renderInto(list, elId){
 renderInto(APPS,'cases');
 renderInto(ECOM,'ecom-cases');
 renderInto(BRAND,'brand-cases');
-renderInto(MUSIC,'music-cases');
 renderInto(GAMES,'games-cases');
 
 /* cycle: show the live intro, then rotate the product photos, then back */

@@ -258,7 +258,8 @@
   const style = document.createElement("style");
   style.textContent =
     "*{cursor:none!important}.cursor{display:none!important}" +
-    "#rkt{position:fixed;left:0;top:0;z-index:100000;pointer-events:none;will-change:transform}" +
+    "#rkt{position:fixed;left:0;top:0;z-index:100000;pointer-events:none;will-change:transform;opacity:0;transition:opacity .5s}" +
+    "body.ready #rkt{opacity:1}" +
     "#rkt svg{display:block;filter:drop-shadow(0 0 7px rgba(255,91,46,.55))}" +
     "#rkt-fl{transform-box:fill-box;transform-origin:top center}";
   document.head.appendChild(style);

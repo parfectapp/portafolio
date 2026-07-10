@@ -7,7 +7,7 @@
 <meta name="description" content="Founder & builder and data scientist in Morelia. I design and build products end to end — apps, brands and games, all running live.">
 <meta property="og:title" content="André Macouzet — I turn data into products">
 <meta name="theme-color" content="#0A0A0B">
-<link rel="stylesheet" href="css/style.css?v=5">
+<link rel="stylesheet" href="css/style.css?v=6">
 <style>
   /* ---- portafolio: live-preview tiles over OBRA's design ---- */
   /* ---- big alternating showcases (OBRA look) ---- */
@@ -27,7 +27,7 @@
   .case-info h3{font-family:var(--serif);font-weight:400;font-size:clamp(2.8rem,6vw,6rem);
     line-height:.92;letter-spacing:-.02em}
   .case-info .c-cat{margin-top:14px;font-size:.82rem;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-2)}
-  .case-info .c-desc{margin-top:22px;max-width:42ch;color:var(--ink-1);font-size:clamp(1rem,1.5vw,1.18rem)}
+  .case-info .c-desc{margin-top:22px;max-width:52ch;color:var(--ink-1);font-size:clamp(1rem,1.5vw,1.14rem);line-height:1.5}
   .case-info .c-enter{margin-top:clamp(26px,3vw,38px);display:inline-flex;align-items:center;gap:12px;
     font-size:.92rem;letter-spacing:.06em;padding-bottom:8px;border-bottom:1px solid var(--accent);transition:gap .4s var(--ease)}
   .case-info .c-enter:hover{gap:22px}
@@ -74,6 +74,15 @@
 <div id="loader" aria-hidden="true">
   <div class="l-word">ANDRÉ</div>
   <div class="l-num">000</div>
+  <svg class="l-rocket" viewBox="0 0 40 64" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="lfg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFC24A"/><stop offset=".5" stop-color="#FF5B2E"/><stop offset="1" stop-color="#FF5B2E" stop-opacity="0"/>
+    </linearGradient></defs>
+    <path class="l-flame" d="M12 37 Q20 70 28 37 Q20 47 12 37 Z" fill="url(#lfg)"/>
+    <path d="M13 30 L5 43 L13 39 Z" fill="#FF5B2E"/><path d="M27 30 L35 43 L27 39 Z" fill="#FF5B2E"/>
+    <path d="M20 2 C29 9 29 23 27 32 L27 38 L13 38 L13 32 C11 23 11 9 20 2 Z" fill="#F4F1EA"/>
+    <circle cx="20" cy="19" r="3.8" fill="#0A0A0B" stroke="#FF5B2E" stroke-width="2.2"/>
+  </svg>
 </div>
 
 <canvas id="art" aria-hidden="true"></canvas>
@@ -210,39 +219,39 @@
 /* ---- apps & platforms ---- */
 const APPS = [
   {name:"PARFECT",cat:"App · Golf analytics",url:"https://parfectapp.github.io/parfect/",host:"parfect.app",
-   desc:"Every shot, every green, every pattern. Golf analytics that turns your rounds into decisions — not nostalgia."},
+   desc:"Every shot, every green, every miss — captured and turned into a picture of your game. Parfect logs your rounds and surfaces the patterns a scorecard hides: where you leak strokes, which clubs to trust, what to practice next. Golf analytics that turns rounds into decisions, not nostalgia."},
   {name:"ABONO",cat:"App · AgTech",url:"https://parfectapp.github.io/agrofin/",host:"abono.mx",
    preview:"phones.html?src=https://parfectapp.github.io/agrofin/&bg=06130c&glow=104a26",
-   desc:"Total control of a greenhouse — costs, irrigation, yield and sales. And the only question that matters: did you make money?"},
+   desc:"The operating system for a working greenhouse. Costs, irrigation, labor, yield and sales in one place, with photos from the field and a Monday routine that keeps everyone honest — all answering the single question that matters: did you actually make money this cycle?"},
   {name:"GOAL ACHIEVER",cat:"App · Goals & habits",url:"https://parfectapp.github.io/goal-achiever/",host:"goalachiever.app",
-   desc:"Your day, in order — a personal OS for goals and habits. Multi-user, social streaks and a shared family cloud. Black, mono, no noise."},
+   desc:"A personal OS for the life you say you want. Set goals, build habits and hold streaks — solo or in social races with friends, plus a shared family cloud so no one drifts. Multi-user, black and mono, zero noise: your day, in order."},
   {name:"NORTHPOINT",cat:"Platform · Trading",url:"northpoint/index.html?v=49",host:"northpoint.trade",
-   desc:"A trading academy and journal in one: logbook, calendar, money-management and an AI coach that reads your trades."},
+   desc:"A trading academy and journal fused into one platform: a structured zero-to-payout course, a disciplined logbook and calendar, money-management math, and an AI coach that reads your fills and tells you the truth about your edge — built to make discretionary traders accountable."},
 ];
 
 /* ---- e-commerce (stores) ---- */
 const ECOM = [
   {name:"PLINTH",cat:"E-commerce · Edition objects",url:"https://parfectapp.github.io/plinth/plinth.html",host:"plinth.studio",
-   desc:"A store for sculptural sound objects in numbered editions. Bone, ink and amber — cart and checkout, pieces you claim, not just buy."},
+   desc:"A store for sculptural sound objects, released in numbered editions. Bone, ink and amber; each piece is claimed, not just bought. Full catalog, cart and checkout, presented with the restraint of a gallery rather than a shop."},
   {name:"CAIRN",cat:"E-commerce · Mountain apparel",url:"cairn/index.html",host:"cairn.wear",
-   desc:"An apparel store in counted editions — faceless silhouettes, noble materials, live cart and WhatsApp checkout."},
+   desc:"Technical mountain apparel in counted editions. Faceless silhouettes, noble materials and a story of altitude — with a live cart and WhatsApp checkout so a drop can sell the moment it launches."},
   {name:"AMR",cat:"E-commerce · Records",url:"https://parfectapp.github.io/amr/",host:"amr.studio",
-   desc:"MONUMENTS — five original records, cut like monuments. A synth-driven artist project sold as numbered masters, on a site you play like a record."},
+   desc:"MONUMENTS — five original records, cut like monuments. A synth-driven artist project where the music was composed, synthesized and mastered, then sold as numbered masters on a site you play like a record instead of just scroll."},
 ];
 
 /* ---- branding ---- */
 const BRAND = [
   {name:"MONSTER KEBABS",cat:"Branding · Dark kitchen",url:"https://parfectapp.github.io/monster-kebabs/",host:"monsterkebabs.mx",
    img:"https://parfectapp.github.io/monster-kebabs/fotos/la-bestia.jpg",
-   desc:"Full brand identity for a premium kebab dark kitchen in Morelia — a kaiju universe, KEBO the mascot, packaging, photography and collectible stickers. Feed the monster."},
+   desc:"A full brand identity for a premium kebab dark kitchen in Morelia — a whole kaiju universe. KEBO the mascot, an eight-chapter brand bible, packaging, food photography and collectible stickers: an appetite you feed, not a logo you slap on. Feed the monster."},
 ];
 
 /* ---- games (AM GAMES) — bottom of the portfolio ---- */
 const GAMES = [
   {name:"UMBRAL",cat:"Game · Metroidvania",url:"umbral/index.html",host:"umbral.game",
-   desc:"An original Hollow-Knight-style metroidvania — a sunken kingdom under the mist. Hand-built combat, a connected map and three bosses, with an original score."},
+   desc:"An original Hollow-Knight-style metroidvania set in a sunken kingdom beneath the mist. Hand-built combat, a connected map of twenty rooms across four zones, three boss fights and an original reactive score — a real game, playable right here in the page."},
   {name:"HEARTS",cat:"Game · Battle royale",url:"https://parfectapp.github.io/hearts/landing.html",host:"hearts.gg",
-   desc:"An animal battle royale — predators vs. prey — with a marketplace, a wallet and a three-phase ranked ladder."},
+   desc:"An animal battle royale where predators hunt prey across shrinking arenas. A complete, live game with a marketplace, a wallet, clans and a three-phase ranked ladder — a Clash-Royale-scale build, not a mockup."},
 ];
 
 function renderInto(list, elId){
@@ -320,7 +329,7 @@ document.querySelectorAll('.case-media').forEach(s=>io.observe(s));
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
-<script src="js/art.js?v=10"></script>
-<script src="js/app.js?v=5"></script>
+<script src="js/art.js?v=11"></script>
+<script src="js/app.js?v=6"></script>
 </body>
 </html>

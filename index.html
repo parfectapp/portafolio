@@ -117,8 +117,8 @@
   <!-- MARQUEE -->
   <section class="marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span>PARFECT</span><i>✦</i><span>ABONO</span><i>✦</i><span>NORTHPOINT</span><i>✦</i><span>PLINTH</span><i>✦</i><span>CAIRN</span><i>✦</i><span>MONSTER KEBABS</span><i>✦</i><span>UMBRAL</span><i>✦</i><span>HEARTS</span><i>✦</i>
-      <span>PARFECT</span><i>✦</i><span>ABONO</span><i>✦</i><span>NORTHPOINT</span><i>✦</i><span>PLINTH</span><i>✦</i><span>CAIRN</span><i>✦</i><span>MONSTER KEBABS</span><i>✦</i><span>UMBRAL</span><i>✦</i><span>HEARTS</span><i>✦</i>
+      <span>PARFECT</span><i>✦</i><span>ABONO</span><i>✦</i><span>NORTHPOINT</span><i>✦</i><span>PLINTH</span><i>✦</i><span>CAIRN</span><i>✦</i><span>MONSTER KEBABS</span><i>✦</i><span>AMR</span><i>✦</i><span>UMBRAL</span><i>✦</i><span>HEARTS</span><i>✦</i>
+      <span>PARFECT</span><i>✦</i><span>ABONO</span><i>✦</i><span>NORTHPOINT</span><i>✦</i><span>PLINTH</span><i>✦</i><span>CAIRN</span><i>✦</i><span>MONSTER KEBABS</span><i>✦</i><span>AMR</span><i>✦</i><span>UMBRAL</span><i>✦</i><span>HEARTS</span><i>✦</i>
     </div>
   </section>
 
@@ -152,6 +152,17 @@
         <span class="idx">Identity · live</span>
       </div>
       <div class="cases" id="brand-cases"></div>
+    </div>
+  </section>
+
+  <!-- MUSIC -->
+  <section class="work" id="music">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <h2>Music.</h2>
+        <span class="idx">Artist · live</span>
+      </div>
+      <div class="cases" id="music-cases"></div>
     </div>
   </section>
 
@@ -233,6 +244,12 @@ const BRAND = [
    desc:"Full brand identity for a premium kebab dark kitchen in Morelia — a kaiju universe, KEBO the mascot, packaging, photography and collectible stickers. Feed the monster."},
 ];
 
+/* ---- music (AMR) ---- */
+const MUSIC = [
+  {name:"AMR",cat:"Music · Artist",url:"https://parfectapp.github.io/amr/",host:"amr.studio",
+   desc:"MONUMENTS — five original records, cut like monuments. A synth-driven artist project with numbered masters and a site you play like a record."},
+];
+
 /* ---- games (AM GAMES) — bottom of the portfolio ---- */
 const GAMES = [
   {name:"UMBRAL",cat:"Game · Metroidvania",url:"umbral/index.html",host:"umbral.game",
@@ -275,6 +292,7 @@ function renderInto(list, elId){
 renderInto(APPS,'cases');
 renderInto(ECOM,'ecom-cases');
 renderInto(BRAND,'brand-cases');
+renderInto(MUSIC,'music-cases');
 renderInto(GAMES,'games-cases');
 
 /* cycle: show the live intro, then rotate the product photos, then back */

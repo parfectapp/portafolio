@@ -54,7 +54,7 @@ Buena si quieres afiliados que vendan por ti. Creas el producto, te da un link d
 ## Después del pago: cómo entregar el curso (MVP)
 Por ahora, cuando alguien pague:
 1. Te llega el aviso del proveedor (email).
-2. Le mandas por correo/WhatsApp: el link de la app (**https://parfectapp.github.io/northpoint/** → "Get started") y la invitación a la comunidad.
+2. Le mandas por correo/WhatsApp: el link de la app (**https://studioamr.github.io/northpoint/** → "Get started") y la invitación a la comunidad.
 3. El curso se ve dentro de la app (Academy).
 
 Cuando tengas volumen, se puede automatizar (webhook del proveedor → acceso). Dímelo y lo armamos.

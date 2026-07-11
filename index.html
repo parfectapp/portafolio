@@ -28,6 +28,12 @@
     line-height:.92;letter-spacing:-.02em}
   .case-info .c-cat{margin-top:14px;font-size:.82rem;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-2)}
   .case-info .c-desc{margin-top:22px;max-width:52ch;color:var(--ink-1);font-size:clamp(1rem,1.5vw,1.14rem);line-height:1.5}
+  .case-info .c-tech{margin-top:24px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+  .case-info .c-tech-l{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);margin-right:4px}
+  .case-info .c-tech .c-chip{position:static;font-size:.74rem;letter-spacing:.01em;color:var(--ink-1);
+    padding:5px 11px;border:1px solid var(--line);border-radius:999px;white-space:nowrap;
+    transition:border-color .3s var(--ease),color .3s var(--ease)}
+  .case-info .c-tech .c-chip:hover{border-color:var(--accent);color:var(--accent)}
   .case-info .c-enter{margin-top:clamp(26px,3vw,38px);display:inline-flex;align-items:center;gap:12px;
     font-size:.92rem;letter-spacing:.06em;padding-bottom:8px;border-bottom:1px solid var(--accent);transition:gap .4s var(--ease)}
   .case-info .c-enter:hover{gap:22px}
@@ -237,6 +243,20 @@ const BG = {
   "UMBRAL":        {palette:["#9D7CFF","#3FD68C","#F4F1EA"], mode:"swirl"},
   "HEARTS":        {palette:["#FF3B57","#FF5B2E","#F4F1EA"], mode:"radial"},
 };
+/* ---- habilidades técnicas / stack destacado por proyecto ---- */
+const SKILLS = {
+  "PARFECT":       ["Vanilla JS","Data analytics","Data viz","UX design"],
+  "ABONO":         ["JavaScript","Supabase","Offline-first PWA","Cloud sync"],
+  "GOAL ACHIEVER": ["Three.js / WebGL","Supabase","Multi-user","GSAP"],
+  "NORTHPOINT":    ["JS SPA","Trading analytics","Data analysis","Money management"],
+  "PLINTH":        ["Generative SVG","Frontend","E-commerce UX","Motion"],
+  "CAIRN":         ["Frontend","E-commerce","WhatsApp checkout","CSS craft"],
+  "AMR":           ["WebAudio","Python (DSP)","Canvas visuals","Audio mastering"],
+  "MONSTER KEBABS":["Brand identity","Illustration","Art direction","Copywriting"],
+  "UMBRAL":        ["Canvas game engine","WebAudio score","Combat design","Level design"],
+  "HEARTS":        ["Game systems","Canvas","Game economy","Real-time"],
+};
+
 const ALL = [
   ...APPS.map(p=>({...p,group:"Apps"})),
   ...ECOM.map(p=>({...p,group:"E-commerce"})),
@@ -263,6 +283,7 @@ function buildProject(p,i){
         <h3>${p.name.replace(/ /,'<br>')}</h3>
         <div class="c-cat">${p.cat}</div>
         <p class="c-desc">${p.desc}</p>
+        <div class="c-tech"><span class="c-tech-l">Stack</span>${(SKILLS[p.name]||[]).map(s=>`<span class="c-chip">${s}</span>`).join('')}</div>
         <a class="c-enter" href="${p.url}" target="_blank" rel="noopener" data-hover><b>Open project</b> ↗</a>
       </div>
       <a class="case-media" href="${p.url}" target="_blank" rel="noopener" data-hover aria-label="Open ${p.name}">

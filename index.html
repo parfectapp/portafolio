@@ -67,6 +67,21 @@
   .games-brand .gmark{color:var(--accent);font-size:1rem;transform:translateY(-1px)}
   .games-brand .gname{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.3rem);letter-spacing:.03em}
   .games-brand .gtag{font-size:.82rem;color:var(--ink-1);letter-spacing:.02em;max-width:42ch}
+  /* tabbed work — one project at a time */
+  .tabs{display:flex;flex-wrap:wrap;gap:9px;margin:clamp(24px,4vh,48px) 0 clamp(30px,5vh,56px);
+    padding-bottom:clamp(22px,3vh,30px);border-bottom:1px solid var(--line)}
+  .tab{display:inline-flex;flex-direction:column;gap:3px;padding:9px 15px;border:1px solid var(--line);
+    border-radius:11px;background:transparent;color:var(--ink-1);cursor:pointer;text-align:left;
+    transition:background .4s var(--ease),border-color .4s var(--ease),color .4s var(--ease),transform .4s var(--ease)}
+  .tab .t-n{font-family:var(--serif);font-size:1.02rem;letter-spacing:.01em;white-space:nowrap;line-height:1}
+  .tab .t-g{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);transition:color .4s var(--ease)}
+  .tab:hover{border-color:var(--ink-2);color:var(--ink);transform:translateY(-2px)}
+  .tab.on{background:var(--accent);border-color:var(--accent);color:#0A0A0B}
+  .tab.on .t-g{color:rgba(10,10,11,.62)}
+  .stage-wrap{position:relative;min-height:52vh}
+  .stage-wrap .case{display:none}
+  .stage-wrap .case.on{display:grid;animation:caseIn .7s var(--ease) both}
+  @keyframes caseIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -122,52 +137,15 @@
     </div>
   </section>
 
-  <!-- WORK -->
+  <!-- WORK (tabbed — one project at a time) -->
   <section class="work" id="work">
     <div class="wrap">
       <div class="sec-head rv">
-        <h2>Apps &amp;<br>platforms.</h2>
-        <span class="idx">4 · live</span>
+        <h2>Selected<br>work.</h2>
+        <span class="idx" id="work-count"></span>
       </div>
-      <div class="cases" id="cases"></div>
-    </div>
-  </section>
-
-  <!-- E-COMMERCE -->
-  <section class="work" id="ecommerce">
-    <div class="wrap">
-      <div class="sec-head rv">
-        <h2>E-commerce.</h2>
-        <span class="idx">Stores · live</span>
-      </div>
-      <div class="cases" id="ecom-cases"></div>
-    </div>
-  </section>
-
-  <!-- BRANDING -->
-  <section class="work" id="branding">
-    <div class="wrap">
-      <div class="sec-head rv">
-        <h2>Branding.</h2>
-        <span class="idx">Identity · live</span>
-      </div>
-      <div class="cases" id="brand-cases"></div>
-    </div>
-  </section>
-
-  <!-- GAMES -->
-  <section class="work games" id="games">
-    <div class="wrap">
-      <div class="games-brand rv">
-        <span class="gmark">◆</span>
-        <span class="gname">AM&nbsp;GAMES</span>
-        <span class="gtag">Original playable worlds — built from scratch, running in the browser.</span>
-      </div>
-      <div class="sec-head rv">
-        <h2>Playable<br>worlds.</h2>
-        <span class="idx">2 games · live</span>
-      </div>
-      <div class="cases" id="games-cases"></div>
+      <div class="tabs rv" id="tabs" role="tablist" aria-label="Projects"></div>
+      <div class="stage-wrap" id="stage-wrap"></div>
     </div>
   </section>
 
@@ -246,81 +224,85 @@ const GAMES = [
 ];
 
 function renderInto(list, elId){
-  const box=document.getElementById(elId);
-  list.forEach((p,i)=>{
-    const art=document.createElement('article');
-    art.className="case rv";
-    art.innerHTML=`
-      <div class="case-info">
-        <div class="c-idx">${String(i+1).padStart(2,'0')} / ${String(list.length).padStart(2,'0')} · Live</div>
-        <h3>${p.name.replace(/ /,'<br>')}</h3>
-        <div class="c-cat">${p.cat}</div>
-        <p class="c-desc">${p.desc}</p>
-        <a class="c-enter" href="${p.url}" target="_blank" rel="noopener" data-hover><b>Open project</b> ↗</a>
-      </div>
-      <a class="case-media" href="${p.url}" target="_blank" rel="noopener" data-hover aria-label="Open ${p.name}">
-        <div class="chrome">
-          <i></i><i></i><i></i>
-          <span class="url">${p.host}</span>
-          <span class="live"><b></b>En vivo</span>
-        </div>
-        <div class="stage">
-          <div class="load">Cargando ${p.name}…</div>
-          ${p.img
-            ? `<img class="shot-img" src="${p.img}" alt="${p.name}" loading="lazy">`
-            : `<iframe data-src="${p.preview || p.url}" scrolling="no" title="${p.name}" tabindex="-1"></iframe>`}
-          <div class="veil"></div>
-          ${p.imgs ? `<div class="slides">${p.imgs.map(u=>`<img class="slide" src="${u}" alt="" loading="lazy">`).join('')}</div>` : ''}
-        </div>
-      </a>`;
-    box.appendChild(art);
-  });
+  /* legacy — no longer used */
 }
-renderInto(APPS,'cases');
-renderInto(ECOM,'ecom-cases');
-renderInto(BRAND,'brand-cases');
-renderInto(GAMES,'games-cases');
 
-/* cycle: show the live intro, then rotate the product photos, then back */
-document.querySelectorAll('.stage .slides').forEach(box=>{
-  const slides=[...box.querySelectorAll('.slide')];
-  if(!slides.length) return;
-  let i=-1; // -1 = intro (iframe visible)
-  setInterval(()=>{
-    slides.forEach(s=>s.classList.remove('on'));
-    i++;
-    if(i>=slides.length){ i=-1; return; }   // back to the live intro
-    slides[i].classList.add('on');
-  }, 3400);
-});
+/* ---- firma de fondo por proyecto: paleta + forma ---- */
+const BG = {
+  "PARFECT":       {palette:["#3FD68C","#F4F1EA","#2FBF79"], mode:"orbit"},
+  "ABONO":         {palette:["#3FD68C","#F2A33C","#F4F1EA"], mode:"rise"},
+  "GOAL ACHIEVER": {palette:["#F4F1EA","#FF5B2E","#9D7CFF"], mode:"radial"},
+  "NORTHPOINT":    {palette:["#FF3B57","#3FD68C","#F4F1EA"], mode:"bars"},
+  "PLINTH":        {palette:["#F2A33C","#F4F1EA","#FF5B2E"], mode:"swirl"},
+  "CAIRN":         {palette:["#7CB0FF","#F4F1EA","#9D7CFF"], mode:"waves"},
+  "AMR":           {palette:["#9D7CFF","#FF5B2E","#F4F1EA"], mode:"orbit"},
+  "MONSTER KEBABS":{palette:["#FF3B57","#F2A33C","#FF5B2E"], mode:"turbulent"},
+  "UMBRAL":        {palette:["#9D7CFF","#3FD68C","#F4F1EA"], mode:"swirl"},
+  "HEARTS":        {palette:["#FF3B57","#FF5B2E","#F4F1EA"], mode:"radial"},
+};
+const ALL = [
+  ...APPS.map(p=>({...p,group:"Apps"})),
+  ...ECOM.map(p=>({...p,group:"E-commerce"})),
+  ...BRAND.map(p=>({...p,group:"Branding"})),
+  ...GAMES.map(p=>({...p,group:"Games"})),
+].map(p=>({...p,bg:BG[p.name]||{palette:["#FF5B2E","#F4F1EA","#9D7CFF"],mode:"swirl"}}));
 
-/* lazy-load + fade the live previews */
-const io=new IntersectionObserver((es)=>{
-  es.forEach(e=>{
-    if(!e.isIntersecting)return;
-    const load=e.target.querySelector('.load');
-    const f=e.target.querySelector('iframe');
-    const img=e.target.querySelector('.shot-img');
-    if(img){
-      const done=()=>{img.classList.add('ready');load&&load.classList.add('hide')};
-      img.complete?done():img.addEventListener('load',done);
-      setTimeout(done,3000);
-    } else if(f){
-      f.src=f.dataset.src;
-      const reveal=()=>{f.classList.add('ready');load&&load.classList.add('hide')};
-      f.addEventListener('load',reveal);
-      setTimeout(reveal,4500);
-    }
-    io.unobserve(e.target);
-  });
-},{rootMargin:"600px 0px"});
-document.querySelectorAll('.case-media').forEach(s=>io.observe(s));
+const tabsEl=document.getElementById('tabs');
+const stageWrap=document.getElementById('stage-wrap');
+document.getElementById('work-count').textContent = ALL.length+" projects · live";
+
+tabsEl.innerHTML = ALL.map((p,i)=>
+  `<button class="tab" data-i="${i}" data-hover><span class="t-n">${p.name}</span><span class="t-g">${p.group}</span></button>`
+).join('');
+
+const cache={};
+function buildCase(p,i){
+  const art=document.createElement('article');
+  art.className="case";
+  art.innerHTML=`
+    <div class="case-info">
+      <div class="c-idx">${String(i+1).padStart(2,'0')} / ${String(ALL.length).padStart(2,'0')} · ${p.group}</div>
+      <h3>${p.name.replace(/ /,'<br>')}</h3>
+      <div class="c-cat">${p.cat}</div>
+      <p class="c-desc">${p.desc}</p>
+      <a class="c-enter" href="${p.url}" target="_blank" rel="noopener" data-hover><b>Open project</b> ↗</a>
+    </div>
+    <a class="case-media" href="${p.url}" target="_blank" rel="noopener" data-hover aria-label="Open ${p.name}">
+      <div class="chrome"><i></i><i></i><i></i><span class="url">${p.host}</span><span class="live"><b></b>En vivo</span></div>
+      <div class="stage">
+        <div class="load">Cargando ${p.name}…</div>
+        ${p.img?`<img class="shot-img" src="${p.img}" alt="${p.name}" loading="lazy">`
+               :`<iframe data-src="${p.preview||p.url}" scrolling="no" title="${p.name}" tabindex="-1"></iframe>`}
+        <div class="veil"></div>
+      </div>
+    </a>`;
+  return art;
+}
+function loadMedia(art){
+  const load=art.querySelector('.load'), f=art.querySelector('iframe'), img=art.querySelector('.shot-img');
+  if(img){ const done=()=>{img.classList.add('ready');load&&load.classList.add('hide');}; img.complete?done():img.addEventListener('load',done); setTimeout(done,3000); }
+  else if(f && !f.src){ f.src=f.dataset.src; const rev=()=>{f.classList.add('ready');load&&load.classList.add('hide');}; f.addEventListener('load',rev); setTimeout(rev,4500); }
+}
+let active=-1;
+function show(i){
+  if(i===active) return;
+  active=i;
+  [...tabsEl.children].forEach((b,k)=>b.classList.toggle('on',k===i));
+  if(!cache[i]){ cache[i]=buildCase(ALL[i],i); stageWrap.appendChild(cache[i]); loadMedia(cache[i]); }
+  [...stageWrap.children].forEach(c=>c.classList.remove('on'));
+  void cache[i].offsetWidth;                 // reinicia la animación de entrada
+  cache[i].classList.add('on');
+  window.__pendingProject = ALL[i].bg;       // por si art.js aún no carga
+  if(window.__project) window.__project(ALL[i].bg);
+}
+tabsEl.addEventListener('click',e=>{ const b=e.target.closest('.tab'); if(b) show(+b.dataset.i); });
+show(0);
 </script>
 
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
-<script src="js/art.js?v=19"></script>
+<script src="js/art.js?v=22"></script>
 <script src="js/app.js?v=7"></script>
 </body>
 </html>

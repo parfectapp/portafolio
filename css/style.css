@@ -34,25 +34,13 @@ main,nav,footer{position:relative;z-index:2}
 #loader{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:flex-end;justify-content:space-between;
   padding:clamp(28px,5vw,60px);transition:opacity .7s var(--ease),visibility .7s}
 #loader.done{opacity:0;visibility:hidden}
-.l-word{font-family:var(--serif);font-size:clamp(4rem,22vw,18rem);line-height:.8;font-weight:400;letter-spacing:-.02em;
+/* intro: la Tierra + despegue se dibujan en #l-canvas; ANDRÉ se eleva */
+#l-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.l-word{position:relative;z-index:1;font-family:var(--serif);font-size:clamp(4rem,22vw,18rem);line-height:.8;font-weight:400;letter-spacing:-.02em;
   transition:transform 1.15s cubic-bezier(.55,0,.1,1),opacity 1.1s}
-.l-num{font-size:.85rem;color:var(--ink-1);letter-spacing:.2em;font-variant-numeric:tabular-nums;padding-bottom:.6em;transition:opacity .4s}
-/* intro: André se eleva y el cohete despega siguiéndolo */
-.l-rocket{position:absolute;left:11%;bottom:-190px;width:clamp(46px,6vw,78px);opacity:0;pointer-events:none;
-  filter:drop-shadow(0 0 14px rgba(255,91,46,.6))}
-.l-flame{transform-box:fill-box;transform-origin:top center}
+.l-num{position:relative;z-index:1;font-size:.85rem;color:var(--ink-1);letter-spacing:.2em;font-variant-numeric:tabular-nums;padding-bottom:.6em;transition:opacity .4s}
 #loader.launch .l-word{transform:translateY(-135vh) rotate(-3deg);opacity:0}
 #loader.launch .l-num{opacity:0}
-#loader.launch .l-rocket{animation:takeoff 1.2s cubic-bezier(.5,0,.25,1) forwards}
-#loader.launch .l-flame{animation:flame .09s steps(2) infinite}
-@keyframes takeoff{
-  0%{bottom:-190px;opacity:0}
-  12%{opacity:1}
-  22%{bottom:-40px}
-  100%{bottom:135vh;opacity:0}
-}
-@keyframes flame{0%{transform:scaleY(1)}100%{transform:scaleY(1.6)}}
-@media(pointer:coarse){.l-rocket{display:none}}
 
 /* nav */
 nav{position:fixed;top:0;left:0;width:100%;z-index:50;padding:24px 0;transition:transform .5s var(--ease)}

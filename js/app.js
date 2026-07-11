@@ -12,16 +12,75 @@
 
   /* loader */
   const loader = $("#loader"), lnum = $(".l-num");
+  pixelCoder();                           // monito pixel-art programando
+  const t0 = Date.now();
   let p = 0;
   const tick = setInterval(() => {
-    p += Math.random() * 16 + 6;
+    p += Math.random() * 11 + 4;
     if (p >= 100) { p = 100; clearInterval(tick); done(); }
     lnum.textContent = String(Math.floor(p)).padStart(3, "0");
-  }, 110);
+  }, 140);
   function done() {
-    setTimeout(() => { loader.classList.add("done"); document.body.classList.add("ready"); reveals(); }, 300);
+    const wait = Math.max(300, 2600 - (Date.now() - t0));   // deja ver el monito ~2.6s
+    setTimeout(() => { loader.classList.add("done"); document.body.classList.add("ready"); reveals(); }, wait);
   }
-  setTimeout(() => { if (!document.body.classList.contains("ready")) { clearInterval(tick); done(); } }, 4000);
+  setTimeout(() => { if (!document.body.classList.contains("ready")) { clearInterval(tick); done(); } }, 5000);
+
+  /* ---- monito SD pixel programando en una compu ---- */
+  function pixelCoder() {
+    const c = document.getElementById("l-pixel"); if (!c) return;
+    const g = c.getContext("2d"); g.imageSmoothingEnabled = false;
+    const SKIN = "#e8b48b", HAIR = "#26242b", SHIRT = "#ff5b2e", SHIRTSH = "#c8431f",
+      DESK = "#4a4038", DESKED = "#312a24", MON = "#1a1a22", MONLIP = "#2c2c36",
+      SCREEN = "#0a130d", CODE = "#3fd68c", CODE2 = "#8af2c0", BONE = "#f4f1ea", CHAIR = "#2a2a31";
+    const px = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); };
+    let rows = [22, 14, 28, 10, 20, 16, 24], t = 0;
+    const rnd = () => 8 + ((Math.sin(t * 12.9 + rows.length) * 0.5 + 0.5) * 22 | 0);
+
+    function draw() {
+      t++;
+      g.clearRect(0, 0, 120, 90);
+      // silla detrás
+      px(26, 34, 30, 26, CHAIR); px(28, 32, 26, 4, "#33333b");
+      // cabeza
+      px(29, 18, 22, 4, HAIR);           // fleco arriba
+      px(27, 22, 26, 4, HAIR);
+      px(29, 24, 22, 14, SKIN);          // cara
+      px(27, 24, 2, 12, HAIR); px(51, 24, 2, 12, HAIR);  // pelo lados
+      px(26, 30, 2, 3, SKIN); px(52, 30, 2, 3, SKIN);    // orejas
+      // ojos (parpadeo)
+      const blink = (t % 150) < 6;
+      if (blink) { px(33, 31, 4, 1, "#26242b"); px(43, 31, 4, 1, "#26242b"); }
+      else { px(34, 29, 3, 3, "#26242b"); px(44, 29, 3, 3, "#26242b"); }
+      px(38, 33, 4, 1, "#b5714c");       // boca
+      // cuello + cuerpo
+      px(36, 37, 8, 3, SKIN);
+      px(28, 40, 24, 18, SHIRT); px(28, 52, 24, 6, SHIRTSH);
+      // monitor (a la derecha, mirando a nosotros)
+      px(64, 14, 44, 38, MON); px(64, 50, 44, 3, MONLIP);
+      px(68, 18, 36, 30, SCREEN);
+      px(82, 52, 8, 8, MON); px(76, 60, 20, 3, MON);     // pie + base
+      // código en pantalla (scroll)
+      if (t % 9 === 0) { rows.push(rnd()); if (rows.length > 7) rows.shift(); }
+      for (let i = 0; i < 7; i++) {
+        const y = 21 + i * 4, w = rows[i] || 10;
+        px(71, y, 3, 2, "#5a6b60");                       // gutter
+        px(76, y, Math.min(w, 26), 2, i % 3 === 0 ? CODE2 : CODE);
+      }
+      if ((t % 24) < 12) px(76 + Math.min(rows[6] || 10, 26) + 1, 21 + 6 * 4, 2, 2, BONE); // cursor
+      // escritorio (frente)
+      px(0, 63, 120, 14, DESK); px(0, 63, 120, 2, DESKED);
+      // teclado
+      px(24, 60, 40, 4, "#2a2a31");
+      for (let k = 0; k < 9; k++) px(26 + k * 4, 61, 2, 1, "#4a4a55");
+      // brazos + manos tecleando (alternan)
+      const up = Math.floor(t / 7) % 2;
+      px(26, 44, 5, 14, SHIRT); px(30, 56 + (up ? -1 : 0), 5, 3, SKIN);   // izq
+      px(49, 44, 5, 14, SHIRT); px(48, 56 + (up ? 0 : -1), 5, 3, SKIN);   // der
+      if (!loader.classList.contains("done")) requestAnimationFrame(draw);
+    }
+    draw();
+  }
 
   /* lenis smooth scroll */
   let lenis = null;

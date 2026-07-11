@@ -36,6 +36,9 @@ main,nav,footer{position:relative;z-index:2}
 #loader.done{opacity:0;visibility:hidden}
 .l-word{font-family:var(--serif);font-size:clamp(4rem,22vw,18rem);line-height:.8;font-weight:400;letter-spacing:-.02em}
 .l-num{font-size:.85rem;color:var(--ink-1);letter-spacing:.2em;font-variant-numeric:tabular-nums;padding-bottom:.6em}
+/* monito pixel-art programando (intro) */
+#l-pixel{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);
+  width:min(360px,62vw);height:auto;image-rendering:pixelated;image-rendering:crisp-edges}
 
 /* nav */
 nav{position:fixed;top:0;left:0;width:100%;z-index:50;padding:24px 0;transition:transform .5s var(--ease)}

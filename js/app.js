@@ -19,13 +19,7 @@
     lnum.textContent = String(Math.floor(p)).padStart(3, "0");
   }, 110);
   function done() {
-    if (reduce) {
-      setTimeout(() => { loader.classList.add("done"); document.body.classList.add("ready"); reveals(); }, 300);
-      return;
-    }
-    // despegue: André se eleva y el cohete lo sigue, luego se revela la página
-    loader.classList.add("launch");
-    setTimeout(() => { loader.classList.add("done"); document.body.classList.add("ready"); reveals(); }, 1150);
+    setTimeout(() => { loader.classList.add("done"); document.body.classList.add("ready"); reveals(); }, 300);
   }
   setTimeout(() => { if (!document.body.classList.contains("ready")) { clearInterval(tick); done(); } }, 4000);
 

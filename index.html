@@ -185,21 +185,23 @@ const APPS = [
   {name:"PARFECT",cat:"App · Golf analytics",url:"https://parfectapp.github.io/parfect/",host:"parfect.app",
    desc:"Every shot, every green, every miss — captured and turned into a picture of your game. Parfect logs your rounds and surfaces the patterns a scorecard hides: where you leak strokes, which clubs to trust, what to practice next. Golf analytics that turns rounds into decisions, not nostalgia."},
   {name:"ABONO",cat:"App · AgTech",url:"https://parfectapp.github.io/agrofin/",host:"abono.mx",
-   preview:"phones.html?src=https://parfectapp.github.io/agrofin/&bg=06130c&glow=104a26",
+   preview:"phones.html?src=abono/index.html&views=home,cortes,gastos&bg=06130c&glow=104a26",
    desc:"The operating system for a working greenhouse. Costs, irrigation, labor, yield and sales in one place, with photos from the field and a Monday routine that keeps everyone honest — all answering the single question that matters: did you actually make money this cycle?"},
   {name:"GOAL ACHIEVER",cat:"App · Goals & habits",url:"https://parfectapp.github.io/goal-achiever/",host:"goalachiever.app",
    desc:"A personal OS for the life you say you want. Set goals, build habits and hold streaks — solo or in social races with friends, plus a shared family cloud so no one drifts. Multi-user, black and mono, zero noise: your day, in order."},
-  {name:"NORTHPOINT",cat:"Platform · Trading",url:"northpoint/index.html?v=49",host:"northpoint.trade",
+  {name:"NORTHPOINT",cat:"Platform · Trading",url:"northpoint/index.html?v=51",host:"northpoint.trade",
    desc:"A trading academy and journal fused into one platform: a structured zero-to-payout course, a disciplined logbook and calendar, money-management math, and an AI coach that reads your fills and tells you the truth about your edge — built to make discretionary traders accountable."},
 ];
 
 /* ---- e-commerce (stores) ---- */
 const ECOM = [
   {name:"PLINTH",cat:"E-commerce · Edition objects",url:"https://parfectapp.github.io/plinth/plinth.html",host:"plinth.studio",
+   preview:"https://parfectapp.github.io/plinth/plinth.html#allinone",
    desc:"A store for sculptural sound objects, released in numbered editions. Bone, ink and amber; each piece is claimed, not just bought. Full catalog, cart and checkout, presented with the restraint of a gallery rather than a shop."},
   {name:"CAIRN",cat:"E-commerce · Mountain apparel",url:"cairn/index.html",host:"cairn.wear",
    desc:"Technical mountain apparel in counted editions. Faceless silhouettes, noble materials and a story of altitude — with a live cart and WhatsApp checkout so a drop can sell the moment it launches."},
   {name:"AMR",cat:"E-commerce · Records",url:"https://parfectapp.github.io/amr/",host:"amr.studio",
+   preview:"https://parfectapp.github.io/amr/#vinyls",
    desc:"MONUMENTS — five original records, cut like monuments. A synth-driven artist project where the music was composed, synthesized and mastered, then sold as numbered masters on a site you play like a record instead of just scroll."},
 ];
 
@@ -279,7 +281,22 @@ function loadMedia(node){
   const cm=node.querySelector('.case-media');
   const load=cm.querySelector('.load'), f=cm.querySelector('iframe'), img=cm.querySelector('.shot-img');
   if(img){ const done=()=>{img.classList.add('ready');load&&load.classList.add('hide');}; img.complete?done():img.addEventListener('load',done); setTimeout(done,3000); }
-  else if(f && !f.src){ f.src=f.dataset.src; const rev=()=>{f.classList.add('ready');load&&load.classList.add('hide');}; f.addEventListener('load',rev); setTimeout(rev,4500); }
+  else if(f && !f.src){
+    f.src=f.dataset.src;
+    const rev=()=>{f.classList.add('ready');load&&load.classList.add('hide');};
+    f.addEventListener('load',()=>{
+      rev();
+      // AMR: cierra su intro y baja a los vinilos (mismo origen en producción)
+      if(/\/amr\//.test(f.dataset.src)){
+        try{
+          const d=f.contentDocument||f.contentWindow.document;
+          const skip=d.getElementById('skipBtn'); if(skip) skip.click();
+          setTimeout(()=>{ const v=d.getElementById('vinyls'); if(v) v.scrollIntoView(); }, 400);
+        }catch(e){/* cross-origin (local): se queda en el intro */}
+      }
+    });
+    setTimeout(rev,4500);
+  }
 }
 let active=-1;
 function show(i){

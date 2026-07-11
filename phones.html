@@ -43,6 +43,8 @@
   if (q.get('glow')) document.documentElement.style.setProperty('--glow', '#' + q.get('glow'));
   // three scroll offsets so the phones show different parts of the app
   const offsets = [0, 620, 1180];
+  // ...or three distinct app views (each phone loads src?demo=1&view=<v>)
+  const views = (q.get('views') || '').split(',').map(s=>s.trim()).filter(Boolean);
   const phones = [...document.querySelectorAll('.phone')];
 
   function fit(){
@@ -57,10 +59,16 @@
 
   phones.forEach((ph,i)=>{
     const f = document.createElement('iframe');
-    f.src = src; f.setAttribute('scrolling','no'); f.loading = 'eager';
+    if (views.length) {
+      const sep = src.includes('?') ? '&' : '?';
+      f.src = src + sep + 'demo=1&view=' + encodeURIComponent(views[i] || views[0]);
+    } else {
+      f.src = src;
+    }
+    f.setAttribute('scrolling','no'); f.loading = 'eager';
     ph.querySelector('.screen').appendChild(f);
     f.addEventListener('load', ()=>{
-      try { f.contentWindow.scrollTo(0, offsets[i] || 0); } catch(e){}
+      if (!views.length) { try { f.contentWindow.scrollTo(0, offsets[i] || 0); } catch(e){} }
     });
   });
   fit();

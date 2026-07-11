@@ -1,0 +1,14 @@
+{
+  "name": "ABONO — Control de tu invernadero",
+  "short_name": "ABONO",
+  "description": "Gastos, producción, cortes y clientes de tu invernadero, en tu teléfono.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#eef3ea",
+  "theme_color": "#178a4b",
+  "lang": "es-MX",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

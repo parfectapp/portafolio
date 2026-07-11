@@ -82,26 +82,6 @@
   .stage-wrap .proj{display:none}
   .stage-wrap .proj.on{display:block;animation:caseIn .7s var(--ease) both}
   @keyframes caseIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-  /* "what's inside": funciones + maqueta de iPhones */
-  .proj-more{margin-top:clamp(40px,7vh,96px);display:grid;grid-template-columns:0.85fr 1.3fr;
-    gap:clamp(30px,5vw,80px);align-items:center;padding-top:clamp(40px,6vh,72px);border-top:1px solid var(--line)}
-  @media(max-width:900px){.proj-more{grid-template-columns:1fr;gap:30px}}
-  .pm-label{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:26px}
-  .features{list-style:none;display:flex;flex-direction:column;gap:16px}
-  .features li{font-family:var(--serif);font-weight:400;font-size:clamp(1.15rem,2.1vw,1.7rem);line-height:1.15;
-    color:var(--ink);padding-left:30px;position:relative}
-  .features li::before{content:"→";position:absolute;left:0;color:var(--accent)}
-  .pm-note{display:inline-block;margin-top:26px;font-size:.8rem;letter-spacing:.06em;color:var(--ink-2)}
-  .phones-frame{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);
-    background:#07070D;aspect-ratio:16/10.6;box-shadow:0 50px 100px -50px rgba(0,0,0,.95)}
-  .phones-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#07070D;
-    opacity:0;transition:opacity 1s var(--ease)}
-  .phones-frame iframe.ready{opacity:1}
-  .phones-frame .load{position:absolute;inset:0;display:grid;place-items:center;z-index:2;
-    font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-2);
-    background:linear-gradient(100deg,#0c0c0f 30%,rgba(244,241,234,.05) 50%,#0c0c0f 70%);
-    background-size:200% 100%;animation:sh 1.6s infinite;transition:opacity .6s}
-  .phones-frame .load.hide{opacity:0;pointer-events:none}
 </style>
 </head>
 <body>
@@ -275,33 +255,10 @@ tabsEl.innerHTML = ALL.map((p,i)=>
   `<button class="tab" data-i="${i}" data-hover><span class="t-n">${p.name}</span><span class="t-g">${p.group}</span></button>`
 ).join('');
 
-/* funciones clave por proyecto (se muestran + maqueta de iPhones) */
-const FEATURES = {
-  "PARFECT":       ["Shot-by-shot round logging","Strokes gained by category","Club & distance trends","What to practice next"],
-  "ABONO":         ["Costs, irrigation & labor log","Field photos from the greenhouse","Yield & sales tracking","Profit per cycle"],
-  "GOAL ACHIEVER": ["Goals & habit streaks","Social races with friends","Shared family cloud","Daily planner"],
-  "NORTHPOINT":    ["Trade journal & calendar","Money-management math","AI coach that reads your fills","Zero-to-payout course"],
-  "PLINTH":        ["Numbered editions","Gallery-grade product pages","Cart & checkout","Sound-object catalog"],
-  "CAIRN":         ["Counted-edition drops","Technical materials","Live cart","WhatsApp checkout"],
-  "AMR":           ["Five original tracks","Play the site like a record","Numbered masters","Synth-driven production"],
-  "MONSTER KEBABS":["KEBO mascot & kaiju universe","8-chapter brand bible","Packaging & food photography","Collectible stickers"],
-  "UMBRAL":        ["Hand-built combat","20 rooms across 4 zones","3 boss fights","Original reactive score"],
-  "HEARTS":        ["Predator vs prey arenas","Marketplace & wallet","Clans","3-phase ranked ladder"],
-};
-
-/* carga diferida de la maqueta de iPhones (3 apps anidadas — pesada) */
-const phIO=new IntersectionObserver((es)=>{es.forEach(e=>{
-  if(!e.isIntersecting)return; const pf=e.target, f=pf.querySelector('iframe'), ld=pf.querySelector('.load');
-  if(f && !f.src){ f.src=f.dataset.src; const rev=()=>{f.classList.add('ready');ld&&ld.classList.add('hide');}; f.addEventListener('load',rev); setTimeout(rev,6000); }
-  phIO.unobserve(pf);
-});},{rootMargin:"250px 0px"});
-
 const cache={};
 function buildProject(p,i){
   const node=document.createElement('div');
   node.className="proj";
-  const feats=(FEATURES[p.name]||[]).map(f=>`<li>${f}</li>`).join('');
-  const phonesSrc=`phones.html?src=${encodeURIComponent(p.url)}`;
   node.innerHTML=`
     <article class="case">
       <div class="case-info">
@@ -320,18 +277,7 @@ function buildProject(p,i){
           <div class="veil"></div>
         </div>
       </a>
-    </article>
-    <div class="proj-more">
-      <div class="pm-info">
-        <span class="pm-label">What's inside</span>
-        <ul class="features">${feats}</ul>
-        <span class="pm-note">Live on mobile →</span>
-      </div>
-      <div class="phones-frame">
-        <div class="load">Cargando ${p.name} en móvil…</div>
-        <iframe data-src="${phonesSrc}" title="${p.name} on mobile" tabindex="-1" scrolling="no"></iframe>
-      </div>
-    </div>`;
+    </article>`;
   return node;
 }
 function loadMedia(node){
@@ -339,7 +285,6 @@ function loadMedia(node){
   const load=cm.querySelector('.load'), f=cm.querySelector('iframe'), img=cm.querySelector('.shot-img');
   if(img){ const done=()=>{img.classList.add('ready');load&&load.classList.add('hide');}; img.complete?done():img.addEventListener('load',done); setTimeout(done,3000); }
   else if(f && !f.src){ f.src=f.dataset.src; const rev=()=>{f.classList.add('ready');load&&load.classList.add('hide');}; f.addEventListener('load',rev); setTimeout(rev,4500); }
-  const pf=node.querySelector('.phones-frame'); if(pf) phIO.observe(pf);
 }
 let active=-1;
 function show(i){

@@ -992,24 +992,18 @@ try{ HTMLMediaElement.prototype.play = function(){ this.muted = true; return Pro
   document.head.appendChild(st);
 })();
 (function(){
-  function goVinyls(){
-    var v=document.getElementById('records'); if(!v) return;   // "Our best tracks." — las canciones
-    var y=v.getBoundingClientRect().top+(window.scrollY||0);
-    var html=document.documentElement, prev=html.style.scrollBehavior;
-    html.style.scrollBehavior='auto'; window.scrollTo(0,y); html.style.scrollBehavior=prev;
-  }
   function reveal(){
-    // muestra el contenido (el reveal-on-scroll lo oculta al saltar) y carga imágenes
     document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
     document.querySelectorAll('img[loading="lazy"]').forEach(function(im){ im.loading='eager'; });
   }
   function enter(){
+    // preview: entra a la landing y se queda en el HERO (sin bajar a las canciones)
     try{
       var s=document.getElementById('skipBtn'); if(s) s.click();
       var iv=document.getElementById('intro'); if(iv) iv.classList.add('out');
       document.body.classList.remove('lock'); document.body.classList.add('hero-in');
     }catch(e){}
-    [400,900,1400,2100].forEach(function(ms){ setTimeout(function(){ reveal(); goVinyls(); }, ms); });
+    [250,800].forEach(function(ms){ setTimeout(function(){ reveal(); window.scrollTo(0,0); }, ms); });
   }
   if (document.readyState === 'complete') setTimeout(enter, 250);
   else addEventListener('load', function(){ setTimeout(enter, 250); });

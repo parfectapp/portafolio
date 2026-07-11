@@ -993,10 +993,15 @@ try{ HTMLMediaElement.prototype.play = function(){ this.muted = true; return Pro
 })();
 (function(){
   function goVinyls(){
-    var v=document.getElementById('vinyls'); if(!v) return;
+    var v=document.getElementById('records'); if(!v) return;   // "Our best tracks." — las canciones
     var y=v.getBoundingClientRect().top+(window.scrollY||0);
     var html=document.documentElement, prev=html.style.scrollBehavior;
     html.style.scrollBehavior='auto'; window.scrollTo(0,y); html.style.scrollBehavior=prev;
+  }
+  function reveal(){
+    // muestra el contenido (el reveal-on-scroll lo oculta al saltar) y carga imágenes
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+    document.querySelectorAll('img[loading="lazy"]').forEach(function(im){ im.loading='eager'; });
   }
   function enter(){
     try{
@@ -1004,7 +1009,7 @@ try{ HTMLMediaElement.prototype.play = function(){ this.muted = true; return Pro
       var iv=document.getElementById('intro'); if(iv) iv.classList.add('out');
       document.body.classList.remove('lock'); document.body.classList.add('hero-in');
     }catch(e){}
-    [500,900,1400,2100].forEach(function(ms){ setTimeout(goVinyls, ms); });  // reintenta por si la app re-scrollea
+    [400,900,1400,2100].forEach(function(ms){ setTimeout(function(){ reveal(); goVinyls(); }, ms); });
   }
   if (document.readyState === 'complete') setTimeout(enter, 250);
   else addEventListener('load', function(){ setTimeout(enter, 250); });

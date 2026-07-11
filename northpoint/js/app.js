@@ -3,7 +3,7 @@ const App = (() => {
   let db = Store.load();
   const state = { period: UI.todayKey(), lessonId: null, tradePage: 1, sidebar: false, scenario: 2, unlocked: false };
   try { if (!db.trades.length) Data.seed(db); db.meta.onboarded = true; db.meta.name = db.meta.name || 'André'; } catch(e){}
-  let route = 'dashboard'; /* portfolio: boot into the Journal · Dashboard view */
+  let route = 'coach'; /* portfolio: boot into the AI Coach — the strategic view (edge + rules to automate) */
 
   let slide = false; // fires the 3D transition only when changing section
   function save() { Store.save(db); }
